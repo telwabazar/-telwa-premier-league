@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>तेलवा बाज़ार प्रीमियर लीग | क्रिकेट रजिस्ट्रेशन</title>
+  <style>
+    :root {
+      --primary: #065f46;
+      --primary-light: #0f766e;
+      --accent: #f59e0b;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --danger: #dc2626;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 48px; }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #022c22, #065f46, #0f766e);
+      color: #fff;
+      text-align: center;
+      padding: 26px 16px 22px;
+      border-bottom: 4px solid var(--accent);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid var(--accent);
+      color: #fde68a;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    header h1 { font-size: 1.55rem; font-weight: 800; letter-spacing: 0.3px; }
+    header p { font-size: 0.9rem; color: #ccfbf1; margin-top: 6px; }
+
+    /* Navigation Tabs */
+    .tabs {
+      display: flex;
+      max-width: 540px;
+      margin: 18px auto 0;
+      padding: 0 14px;
+      gap: 10px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 13px 10px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: #ffffff;
+      color: #334155;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(6, 95, 70, 0.25);
+    }
+
+    /* Main Container */
+    .container { max-width: 540px; margin: 16px auto; padding: 0 14px; }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 22px 18px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e2e8f0;
+    }
+    .hidden { display: none !important; }
+
+    .section-title { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+    .section-sub { font-size: 0.85rem; color: var(--muted); margin-top: 3px; }
+
+    /* Form Controls */
+    label { display: block; font-weight: 700; font-size: 0.88rem; margin: 15px 0 6px; color: #1e293b; }
+    input[type="text"], input[type="tel"], input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: #f8fafc;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: var(--primary-light); background: #fff; }
+
+    .file-input-wrap {
+      border: 1.5px dashed #94a3b8;
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+      text-align: center;
+    }
+    input[type="file"] { width: 100%; font-size: 0.9rem; }
+
+    /* Player Type Grid */
+    .roles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 6px;
+    }
+    .role-option {
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 11px 8px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      user-select: none;
+      background: #f8fafc;
+      transition: all 0.15s ease;
+    }
+    .role-option input { display: none; }
+    .role-option.selected {
+      background: #d1fae5;
+      border-color: var(--primary);
+      color: #022c22;
+      box-shadow: 0 2px 6px rgba(6, 95, 70, 0.15);
+    }
+
+    /* Buttons */
+    .btn-submit {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 11px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--primary-light); }
+    .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    /* Inline Status Banner (No Browser Popups) */
+    .status-box {
+      margin-top: 15px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      text-align: center;
+    }
+    .status-box.ok { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .status-box.err { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+    .status-box.info { background: #e0f2fe; color: #075985; border: 1px solid #7dd3fc; }
+
+    /* Gallery & Admin Section */
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 8px;
+    }
+    .admin-toggle {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1.5px solid #f59e0b;
+      padding: 7px 12px;
+      border-radius: 9px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .admin-box {
+      background: #fffbeb;
+      border: 1.5px solid #fcd34d;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .photo-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .photo-card img {
+      width: 100%;
+      max-height: 340px;
+      object-fit: cover;
+      display: block;
+      background: #f1f5f9;
+    }
+    .photo-info {
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .photo-info p { font-weight: 700; font-size: 0.95rem; color: #0f172a; }
+    .photo-info span { display: block; font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+    .del-btn {
+      background: #fee2e2;
+      color: var(--danger);
+      border: 1px solid #fca5a5;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">🏏 स्थानीय क्रिकेट महाकुंभ</div>
+    <h1>तेलवा बाज़ार प्रीमियर लीग</h1>
+    <p>ऑनलाइन प्लेयर रजिस्ट्रेशन एवं लाइव टूर्नामेंट गैलरी</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('reg')">📝 प्लेयर रजिस्ट्रेशन</button>
+    <button class="tab-btn" onclick="switchTab('gal')">📸 लाइव गैलरी</button>
+  </div>
+
+  <div class="container">
+    <!-- REGISTRATION SECTION -->
+    <div id="regSection" class="card">
+      <h2 class="section-title">प्लेयर रजिस्ट्रेशन फॉर्म</h2>
+      <p class="section-sub">टूर्नामेंट में भाग लेने के लिए नीचे अपनी जानकारी भरें।</p>
+
+      <form id="regForm">
+        <label for="pName">प्लेयर का पूरा नाम *</label>
+        <input type="text" id="pName" placeholder="उदा. प्रिंस कुमार" required />
+
+        <label for="pMobile">मोबाइल नंबर (WhatsApp) *</label>
+        <input type="tel" id="pMobile" placeholder="10 अंकों का मोबाइल नंबर" maxlength="10" inputmode="numeric" required />
+
+        <label for="pPlace">जगह (गाँव / बाज़ार / पंचायत) *</label>
+        <input type="text" id="pPlace" placeholder="उदा. तेलवा बाज़ार" required />
+
+        <label>प्लेयर टाइप चुनें *</label>
+        <div class="roles-grid" id="rolesGrid">
+          <label class="role-option selected"><input type="radio" name="role" value="Allrounder" checked />⚡ ऑलराउंडर</label>
+          <label class="role-option"><input type="radio" name="role" value="Batsman" />🏏 बैट्समैन</label>
+          <label class="role-option"><input type="radio" name="role" value="Bowler" />🎯 बॉलर</label>
+          <label class="role-option"><input type="radio" name="role" value="Wicketkeeper" />🧤 विकेटकीपर</label>
+          <label class="role-option" style="grid-column: span 2;"><input type="radio" name="role" value="Captain / Full Team" />👑 कप्तान (पूरी टीम के साथ)</label>
+        </div>
+
+        <button type="submit" class="btn-submit" id="regBtn">रजिस्ट्रेशन सबमिट करें ✅</button>
+        <div id="regMsg" class="status-box hidden"></div>
+      </form>
+    </div>
+
+    <!-- GALLERY SECTION -->
+    <div id="galSection" class="card hidden">
+      <div class="gallery-header">
+        <div>
+          <h2 class="section-title">टूर्नामेंट झलकियाँ</h2>
+          <p class="section-sub">ग्राउंड, ट्रॉफी और मैच की ताज़ा तस्वीरें</p>
+        </div>
+        <button class="admin-toggle" onclick="toggleAdmin()">🔒 Admin कंट्रोल</button>
+      </div>
+
+      <!-- ADMIN UPLOAD PANEL -->
+      <div id="adminPanel" class="admin-box hidden">
+        <p style="font-size: 0.86rem; font-weight: 800; color: #92400e;">सिर्फ एडमिन के लिए (फोटो तुरंत सबके लिए लाइव होगी)</p>
+
+        <label for="adminPass">एडमिन पासवर्ड *</label>
+        <input type="password" id="adminPass" placeholder="पासवर्ड डालें" />
+
+        <label for="photoCaption">फोटो के बारे में लिखें (Caption)</label>
+        <input type="text" id="photoCaption" placeholder="उदा. ट्रॉफी अनावरण या पिच तैयारी" />
+
+        <label for="photoFile">फोन की गैलरी से फोटो चुनें *</label>
+        <div class="file-input-wrap">
+          <input type="file" id="photoFile" accept="image/*" />
+        </div>
+
+        <button type="button" class="btn-submit" id="uploadBtn" style="background: #d97706;" onclick="uploadPhoto()">फोटो लाइव करें 🚀</button>
+        <div id="galMsg" class="status-box hidden"></div>
+      </div>
+
+      <div id="galleryList" class="gallery-grid">
+        <p style="text-align: center; color: var(--muted); padding: 24px 0;">फोटो लोड हो रही हैं...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 👇 यहाँ Google Apps Script का Web App URL लगेगा 👇
+    const SCRIPT_URL = "YOUR_WEB_APP_URL_HERE";
+
+    // Role Selection UI
+    document.querySelectorAll('.role-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        opt.querySelector('input').checked = true;
+      });
+    });
+
+    // Helper: Show inline message without popup
+    function showStatus(el, type, text) {
+      el.className = "status-box " + type;
+      el.innerText = text;
+      el.classList.remove('hidden');
+    }
+
+    // Tab Switcher
+    function switchTab(tab) {
+      const btns = document.querySelectorAll('.tab-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      if (tab === 'reg') {
+        btns[0].classList.add('active');
+        document.getElementById('regSection').classList.remove('hidden');
+        document.getElementById('galSection').classList.add('hidden');
+      } else {
+        btns[1].classList.add('active');
+        document.getElementById('regSection').classList.add('hidden');
+        document.getElementById('galSection').classList.remove('hidden');
+        loadGallery();
+      }
+    }
+
+    function toggleAdmin() {
+      const panel = document.getElementById('adminPanel');
+      panel.classList.toggle('hidden');
+      loadGallery();
+    }
+
+    // Player Registration Submit
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('regBtn');
+      const msg = document.getElementById('regMsg');
+      const mobile = document.getElementById('pMobile').value.trim();
+
+      if (!/^[6-9]\d{9}$/.test(mobile)) {
+        showStatus(msg, "err", "⚠️ कृपया सही 10 अंकों का मोबाइल नंबर डालें।");
+        return;
+      }
+
+      if (SCRIPT_URL === "YOUR_WEB_APP_URL_HERE") {
+        showStatus(msg, "err", "⚠️ अभी Google Sheet लिंक सेट नहीं किया गया है।");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "रजिस्ट्रेशन हो रहा है...";
+      msg.classList.add('hidden');
+
+      const payload = {
+        action: "register",
+        name: document.getElementById('pName').value.trim(),
+        mobile: mobile,
+        place: document.getElementById('pPlace').value.trim(),
+        role: document.querySelector('input[name="role"]:checked').value
+      };
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          showStatus(msg, "ok", "🎉 बधाई हो! आपका रजिस्ट्रेशन सफलतापूर्वक दर्ज हो गया है।");
+          document.getElementById('regForm').reset();
+          document.querySelectorAll('.role-option').forEach((o, i) => {
+            o.classList.toggle('selected', i === 0);
+            if (i === 0) o.querySelector('input').checked = true;
+          });
+        } else {
+          showStatus(msg, "err", "❌ " + (data.message || "रजिस्ट्रेशन पूरा नहीं हो सका।"));
+        }
+      } catch (err) {
+        showStatus(msg, "err", "❌ नेटवर्क की समस्या है, कृपया इंटरनेट चेक करके दोबारा प्रयास करें।");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "रजिस्ट्रेशन सबमिट करें ✅";
+      }
+    });
+
+    // Auto Image Compressor (Mobile Gallery -> Fast Web Photo)
+    function compressImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxW = 720;
+            const scale = maxW / img.width;
+            canvas.width = img.width > maxW ? maxW : img.width;
+            canvas.height = img.width > maxW ? img.height * scale : img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', 0.65));
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Admin Photo Upload
+    async function uploadPhoto() {
+      const pass = document.getElementById('adminPass').value.trim();
+      const caption = document.getElementById('photoCaption').value.trim() || "तेलवा बाज़ार प्रीमियर लीग";
+      const fileInput = document.getElementById('photoFile');
+      const btn = document.getElementById('uploadBtn');
+      const msg = document.getElementById('galMsg');
+
+      if (!pass) {
+        showStatus(msg, "err", "⚠️ कृपया पहले एडमिन पासवर्ड डालें।");
+        return;
+      }
+      if (!fileInput.files || !fileInput.files[0]) {
+        showStatus(msg, "err", "⚠️ कृपया गैलरी से कोई फोटो चुनें।");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "फोटो अपलोड हो रही है...";
+      msg.classList.add('hidden');
+
+      try {
+        const base64Img = await compressImage(fileInput.files[0]);
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify({
+            action: "upload_photo",
+            password: pass,
+            caption: caption,
+            image: base64Img
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          showStatus(msg, "ok", "✅ फोटो गैलरी में सबके लिए लाइव हो गई है!");
+          document.getElementById('photoCaption').value = "";
+          fileInput.value = "";
+          loadGallery();
+        } else {
+          showStatus(msg, "err", "❌ " + (data.message || "गलत पासवर्ड!"));
+        }
+      } catch (err) {
+        showStatus(msg, "err", "❌ फोटो अपलोड नहीं हो सकी, दोबारा कोशिश करें।");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "फोटो लाइव करें 🚀";
+      }
+    }
+
+    // Admin Delete Photo
+    async function deletePhoto(rowIndex) {
+      const pass = document.getElementById('adminPass').value.trim();
+      const msg = document.getElementById('galMsg');
+      if (!pass) {
+        document.getElementById('adminPanel').classList.remove('hidden');
+        showStatus(msg, "err", "⚠️ फोटो हटाने के लिए ऊपर एडमिन पासवर्ड डालें।");
+        return;
+      }
+      showStatus(msg, "info", "फोटो हटाई जा रही है...");
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify({
+            action: "delete_photo",
+            password: pass,
+            row: rowIndex
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          showStatus(msg, "ok", "🗑️ फोटो गैलरी से हटा दी गई है।");
+          loadGallery();
+        } else {
+          showStatus(msg, "err", "❌ " + (data.message || "गलत पासवर्ड!"));
+        }
+      } catch (e) {
+        showStatus(msg, "err", "❌ फोटो हटाने में समस्या आई।");
+      }
+    }
+
+    // Load Live Gallery
+    async function loadGallery() {
+      const list = document.getElementById('galleryList');
+      const isAdminOpen = !document.getElementById('adminPanel').classList.contains('hidden');
+
+      if (SCRIPT_URL === "YOUR_WEB_APP_URL_HERE") {
+        list.innerHTML = '<p style="text-align:center; color:#64748b; padding:20px;">Google Sheet लिंक जुड़ने के बाद यहाँ फोटो दिखेंगी।</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const data = await res.json();
+        if (!data.photos || data.photos.length === 0) {
+          list.innerHTML = '<p style="text-align:center; color:#64748b; padding:24px 0;">अभी गैलरी में कोई फोटो नहीं डाली गई है।</p>';
+          return;
+        }
+        list.innerHTML = data.photos.map(p => `
+          <div class="photo-card">
+            <img src="${p.image}" alt="Tournament Photo" loading="lazy" />
+            <div class="photo-info">
+              <div>
+                <p>${p.caption}</p>
+                <span>📅 ${p.time}</span>
+              </div>
+              ${isAdminOpen ? `<button class="del-btn" onclick="deletePhoto(${p.row})">🗑️ हटाएं</button>` : ''}
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        list.innerHTML = '<p style="text-align:center; color:#991b1b; padding:20px;">गैलरी लोड नहीं हो सकी। इंटरनेट जांचें।</p>';
+      }
+    }
+  </script>
+</body>
+</html>
